@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Joki Tugas Sekolah 📚</title>
+<style>
+  body {
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(270deg, #7b61ff, #00d4ff, #ff61d2);
+    background-size: 600% 600%;
+    animation: gradientBG 15s ease infinite;
+  }
+  @keyframes gradientBG {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .card {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(17, 25, 40, 0.75);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 32px;
+    width:100%;
+    max-width:480px;
+    color:#fff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    animation: fadeIn 1s ease;
+  }
+  @keyframes fadeIn {
+    from{opacity:0; transform:translateY(20px)}
+    to{opacity:1; transform:translateY(0)}
+  }
+  h1 {
+    text-align:center;
+    margin:0 0 24px;
+    font-size:26px;
+    letter-spacing:1px;
+    color:#fff;
+  }
+  label {
+    display:block;
+    margin-bottom:6px;
+    font-size:14px;
+    font-weight:600;
+    color:#d0d9ff;
+  }
+  input, textarea {
+    width:100%;
+    padding:12px 14px;
+    margin-bottom:18px;
+    border-radius:12px;
+    border:none;
+    font-size:14px;
+    color:#fff;
+    background: rgba(255,255,255,0.08);
+    outline:none;
+    transition:all .2s ease;
+  }
+  input:focus, textarea:focus {
+    background: rgba(255,255,255,0.15);
+    box-shadow:0 0 0 2px #00d4ff80;
+  }
+  textarea{min-height:110px;resize:vertical}
+  button {
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:700;
+    color:#0f172a;
+    cursor:pointer;
+    background: linear-gradient(135deg, #00ffcc, #7b61ff, #ff61d2);
+    background-size: 300% 300%;
+    animation: gradientBtn 6s ease infinite;
+    transition: transform .2s;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+  }
+  button:hover { transform: translateY(-3px) scale(1.03);}
+  @keyframes gradientBtn {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .glow {
+    position:absolute;
+    width:200px;
+    height:200px;
+    background: radial-gradient(circle,#00d4ff55,#0000);
+    top:10%;
+    left:15%;
+    filter: blur(90px);
+    z-index:-1;
+    animation: floatGlow 10s ease-in-out infinite;
+  }
+  .glow2 {
+    position:absolute;
+    width:240px;
+    height:240px;
+    background: radial-gradient(circle,#ff61d266,#0000);
+    bottom:10%;
+    right:20%;
+    filter: blur(100px);
+    z-index:-1;
+    animation: floatGlow 12s ease-in-out infinite reverse;
+  }
+  @keyframes floatGlow {
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-20px)}
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="glow2"></div>
+
+  <div class="card">
+    <h1>Joki Tugas Sekolah 📚</h1>
+    <form id="jokiForm" data-joki="6285755065018">
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" name="nama" placeholder="Nama lengkap" required>
+
+      <label for="kelas">Kelas</label>
+      <input type="text" id="kelas" name="kelas" placeholder="Contoh: XI IPA 2">
+
+      <label for="mapel">Mata Pelajaran</label>
+      <input type="text" id="mapel" name="mapel" placeholder="Matematika, Fisika, dll" required>
+
+      <label for="deadline">Deadline</label>
+      <input type="text" id="deadline" name="deadline" placeholder="Contoh: 10 Sept 2025">
+
+      <label for="detail">Detail Tugas</label>
+      <textarea id="detail" name="detail" placeholder="Tuliskan deskripsi tugas (jumlah soal, essay, dll)" required></textarea>
+
+      <button type="submit">📲 Kirim ke WhatsApp</button>
+    </form>
+  </div>
+
+<script>
+function buildMessage(form){
+  const d=new FormData(form);
+  return (
+`Halo, saya mau joki tugas sekolah:
+
+• Nama: ${d.get('nama')||'-'}
+• Kelas: ${d.get('kelas')||'-'}
+• Mata Pelajaran: ${d.get('mapel')||'-'}
+• Deadline: ${d.get('deadline')||'-'}
+• Detail: ${d.get('detail')||'-'}
+
+Mohon info harga & waktu pengerjaan. Terima kasih 🙏`
+  );
+}
+function openWhatsApp(number,message){
+  const num=(number||'').replace(/\D/g,'');
+  const url='https://wa.me/'+num+'?text='+encodeURIComponent(message);
+  window.open(url,'_blank');
+}
+document.getElementById('jokiForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const form=e.target;
+  const msg=buildMessage(form);
+  openWhatsApp(form.dataset.joki,msg);
+});
+</script>
+</body>
+</html>
